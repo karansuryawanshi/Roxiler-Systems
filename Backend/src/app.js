@@ -12,7 +12,22 @@ import ownerRoutes from "./routes/owner.routes.js";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://roxiler-systems-1722.onrender.com/",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// ✅ handle preflight requests explicitly
+app.options("*", cors());
+
 app.use(express.json());
 app.use(morgan("dev"));
 
